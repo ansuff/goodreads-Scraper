@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "book-review-scraper"
+version = "0.1.0"
+description = ""
+authors = ["Anas Suffo <anassaffo@gmail.com>"]
+readme = "README.md"
+packages = [{include = "book_review_scraper"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+beautifulsoup4 = "^4.9.3"
+pandas = "^1.2.4"
+requests = "^2.25.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.25.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
