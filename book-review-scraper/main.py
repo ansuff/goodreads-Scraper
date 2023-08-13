@@ -1,7 +1,7 @@
 import sqlite3
 import pandas as pd
-from src.data_extraction import GoodreadsScraper
-from src.data_storage import GoodreadsStorage
+from data_extraction import GoodreadsScraper
+from data_storage import GoodreadsStorage
 
 def main():
     """

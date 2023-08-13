@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "book-review-scraper"
 version = "0.1.0"
-description = ""
+description = "This project extracts the top 30 books read this week on Goodreads in six different genres: Science Fiction, Travel, Thriller, Poetry, Fantasy, and Business. The extracted data is then stored in a SQLite database."
 authors = ["Anas Suffo <anassaffo@gmail.com>"]
 readme = "README.md"
+license = "Proprietary"
 
 [tool.poetry.dependencies]
 python = "^3.11"

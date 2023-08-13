@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from src.data_extraction import GoodreadsScraper
+from data_extraction import GoodreadsScraper
 
 
 class TestGoodreadsScraper(unittest.TestCase):
