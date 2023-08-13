@@ -26,7 +26,7 @@ class GoodreadsStorage:
             ratings INTEGER NOT NULL,
             stars REAL NOT NULL,
             description TEXT NOT NULL,
-            PRIMARY KEY (book_id, genre_id), # composite primary key
+            PRIMARY KEY (book_id, genre_id),
             FOREIGN KEY (genre_id) REFERENCES genres (id)
         );
         '''
