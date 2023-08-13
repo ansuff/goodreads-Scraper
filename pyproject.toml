@@ -4,7 +4,6 @@ version = "0.1.0"
 description = ""
 authors = ["Anas Suffo <anassaffo@gmail.com>"]
 readme = "README.md"
-packages = [{include = "book_review_scraper"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
