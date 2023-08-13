@@ -5,6 +5,9 @@ description = "This project extracts the top 30 books read this week on Goodread
 authors = ["Anas Suffo <anassaffo@gmail.com>"]
 readme = "README.md"
 license = "Proprietary"
+packages = [
+    { include = "book-review-scraper" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -22,3 +25,6 @@ ipykernel = "^6.25.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+my-script = "book-review-scraper.__main__:main"
