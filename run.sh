@@ -21,6 +21,11 @@ task_test() {
     poetry run pytest
 }
 
+# Define a funtion to lint the code
+task_lint() {
+    poetry run ruff check .
+}
+
 # Define a function to run the main script
 task_scrap_store() {
     poetry run python main.py
@@ -28,7 +33,7 @@ task_scrap_store() {
 
 usage() {
   echo "USAGE"
-  echo "scrap-store | test-project | poetry"
+  echo "scrap-store | test-project | poetry | lint"
   echo ""
   exit 1
 }
@@ -39,5 +44,6 @@ case "$cmd" in
 scrap-store) task_scrap_store ;;
 test-project) task_test ;;
 poetry) install_poetry ;;
+lint) task_lint ;;
 *) usage ;;
 esac
