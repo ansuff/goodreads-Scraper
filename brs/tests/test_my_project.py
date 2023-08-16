@@ -11,7 +11,7 @@ class TestGoodreadsScraper(unittest.TestCase):
     def test_extract_book_data(self, mock_get):
         # Mock the response from the book page
         mock_response = MagicMock()
-        mock_response.content = b'<html><body><h1 data-testid="bookTitle">Title</h1><span class="ContributorLink__name">Author</span><span data-testid="reviewsCount">100 reviews</span><span data-testid="ratingsCount">4 avg rating</span><div class="RatingStatistics__rating">4.5</div><span class="Formatted">Description</span></body></html>'
+        mock_response.content = b'<html><body><h1 data-testid="bookTitle">Title</h1><span class="ContributorLink__name">Author</span><span data-testid="reviewsCount">100 reviews</span><span data-testid="ratingsCount">4 avg rating</span><div class="RatingStatistics__rating">4.5</div><span class="Formatted">Description</span></body></html>'  # noqa: E501
         mock_get.return_value = mock_response
 
         # Call the extract_book_data method with a mock URL
@@ -29,7 +29,7 @@ class TestGoodreadsScraper(unittest.TestCase):
     def test_extract_genre_data(self, mock_get):
         # Mock the response from the genre page
         mock_response = MagicMock()
-        mock_response.content = b'<html><body><div class="coverWrapper"><a href="/book/show/1234"></a></div><div class="coverWrapper"><a href="/book/show/5678"></a></div></body></html>'
+        mock_response.content = b'<html><body><div class="coverWrapper"><a href="/book/show/1234"></a></div><div class="coverWrapper"><a href="/book/show/5678"></a></div></body></html>'  # noqa: E501
         mock_get.return_value = mock_response
 
         # Mock the extract_book_data method to return a fixed book data dictionary

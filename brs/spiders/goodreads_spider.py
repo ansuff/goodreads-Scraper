@@ -36,7 +36,7 @@ class GoodreadsSpider(scrapy.Spider):
         """
         for genre in self.genres:
             genre_url = response.css(f'a[href*="{genre}"]::attr(href)').get()
-            yield response.follow(genre_url, callback=self.parse_genre, meta={'genre': genre})
+            yield response.follow(genre_url, callback=self.parse_genre, meta={'genre': genre})  # noqa: E501
 
     def parse_genre(self, response):
         """
