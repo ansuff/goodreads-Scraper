@@ -72,7 +72,7 @@ class GoodreadsScraper:
                     'description': description
                 }
 
-    def extract_genre_data(self, genre):
+    def extract_genre_data(self, genre, url, max_books=30, page_class='left'):
         """
         Extracts the top 30 books read this week for a given genre
         and extracts the book data for each book
@@ -83,21 +83,28 @@ class GoodreadsScraper:
         Returns:
         pd.DataFrame: A DataFrame containing the book data for the genre
         """
-        genre_url_format = f'https://www.goodreads.com/genres/most_read/{genre}'
+        genre_url_format = url + f'/{genre}'
         # Extract the book URLs for the genre
         book_urls = []
         url = genre_url_format.format(genre=genre.lower().replace(' ', '-'))
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
         book_urls += [self.base_url + book.find('a')['href']
-                       for book in soup.find_all('div', class_='coverWrapper')][:30]
+                       for book in soup.find_all('div', class_=page_class)] [:max_books]
+                       # for most read class = 'coverWrapper'
         # Extract the book data for each book URL
         book_data = []
-        print(f'Proceed to extract top 30 book data for genre: {genre}')
+        if max_books == -1:
+            print(f'Proceed to extract most read books data for genre: {genre}')
+        else:
+            print(f'Proceed to extract top {max_books} books data for genre: {genre}')
         for book_url in book_urls:
             book_id = re.search(r'\d+', book_url).group()
             book_data_item = self.extract_book_data(book_url)
             book_data.append({'genre': genre, 'book_id': book_id, **book_data_item})
         # Return the extracted book data as a DataFrame
-        print(f'Extracted top {len(book_data)} books read this week for genre {genre}')
+        if max_books == -1:
+            print(f'Extracted most read books this week for genre {genre}')
+        else:
+            print(f'Extracted top {max_books} books genre {genre}')
         return pd.DataFrame(book_data)

@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "book-review-scraper"
-version = "0.1.0"
-description = "This project extracts the top 30 books read this week on Goodreads in six different genres: Science Fiction, Travel, Thriller, Poetry, Fantasy, and Business. The extracted data is then stored in a SQLite database."
+name = "goodreads-Scraper"
+version = "0.1.1"
+description = "This project extracts the top 30 books and most read this week on goodreads in six different genres: Science Fiction, Travel, Thriller, Poetry, Fantasy, and Business. The extracted data is then stored in a SQLite database."
 authors = ["Anas Suffo <anassaffo@gmail.com>"]
 readme = "README.md"
 license = "Proprietary"
 packages = [
-    { include = "book-review-scraper" }
+    { include = "brs" }
 ]
 
 [tool.poetry.dependencies]
@@ -14,6 +14,7 @@ python = "^3.11"
 beautifulsoup4 = "^4.9.3"
 pandas = "^1.2.4"
 requests = "^2.25.1"
+scrapy = "^2.10.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

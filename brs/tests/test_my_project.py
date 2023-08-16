@@ -43,7 +43,7 @@ class TestGoodreadsScraper(unittest.TestCase):
         })
 
         # Call the extract_genre_data method with a mock genre
-        book_data = self.scraper.extract_genre_data('fiction')
+        book_data = self.scraper.extract_genre_data('fiction',url='https://www.goodreads.com/genres/most_read', max_books=-1, page_class='coverWrapper')
 
         # Check that the book data was extracted correctly
         self.assertEqual(len(book_data), 2)
