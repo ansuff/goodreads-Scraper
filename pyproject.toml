@@ -27,6 +27,3 @@ ipykernel = "^6.25.1"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-my-script = "book-review-scraper.__main__:main"
