@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "brs"
+name = "goodreads-Scraper"
 version = "0.1.1"
 description = "This project extracts the top 30 books and most read this week on goodreads in six different genres: Science Fiction, Travel, Thriller, Poetry, Fantasy, and Business. The extracted data is then stored in a SQLite database."
 authors = ["Anas Suffo <anassaffo@gmail.com>"]
