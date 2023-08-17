@@ -8,7 +8,7 @@ install_poetry() {
 }
 
 # Check if Poetry is installed
-if ! command -v poetry &> /dev/null
+if ! command -v poetry &> /dev/null && [ "$1" != "--skip-poetry" ]
 then
     install_poetry
 fi
@@ -34,6 +34,8 @@ task_scrap() {
 usage() {
   echo "USAGE"
   echo "scrap | unittest | poetry | lint"
+  echo ""
+  echo "add --skip-poetry to skip poetry installation"
   echo ""
   exit 1
 }
