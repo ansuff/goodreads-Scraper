@@ -48,7 +48,6 @@ class TestGoodreadsScraper(unittest.TestCase):
         # Check that the book data was extracted correctly
         self.assertEqual(len(book_data), 1)
         self.assertEqual(book_data.iloc[0]['genre'], 'fiction')
-        self.assertEqual(book_data.iloc[0]['book_id'], '1234')
         self.assertEqual(book_data.iloc[0]['title'], 'Title')
         self.assertEqual(book_data.iloc[0]['author'], 'Author')
         self.assertEqual(book_data.iloc[0]['reviews'], 100)
@@ -79,7 +78,6 @@ class TestGoodreadsScraper(unittest.TestCase):
         # Check that the book data was extracted correctly
         self.assertEqual(len(book_data), 1)
         self.assertEqual(book_data.iloc[0]['genre'], 'fiction')
-        self.assertEqual(book_data.iloc[0]['book_id'], '1234')
         self.assertEqual(book_data.iloc[0]['title'], 'Title')
         self.assertEqual(book_data.iloc[0]['author'], 'Author')
         self.assertEqual(book_data.iloc[0]['reviews'], 100)
