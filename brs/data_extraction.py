@@ -44,7 +44,7 @@ class GoodreadsScraper:
                 'description': description
             }
         else:
-            print(f'Failed to extract book data for {url}')
+            print(f'Failed to extract book data for {url}, will repeat......')
 
             
 
@@ -71,9 +71,9 @@ class GoodreadsScraper:
         # Extract the book data for each book URL
         book_data = []
         if max_books == -1:
-            print(f'Proceed to extract most read books data for genre: {genre}')
+            print(f'Proceed to extract most read books data for genre: {genre}\n')
         else:
-            print(f'Proceed to extract top {max_books} books data for genre: {genre}')
+            print(f'Proceed to extract top {max_books} books data for genre: {genre}\n')
         for book_url in book_urls:
             book_data_item = None 
             while book_data_item is None:
@@ -81,7 +81,7 @@ class GoodreadsScraper:
             book_data.append({'genre': genre, **book_data_item})
         # Return the extracted book data as a DataFrame
         if max_books == -1:
-            print(f'Extracted most read books this week for genre {genre}')
+            print(f'\nExtracted most read books this week for genre {genre}')
         else:
-            print(f'Extracted top {max_books} books genre {genre}')
+            print(f'\nExtracted top {max_books} books genre {genre}')
         return pd.DataFrame(book_data)

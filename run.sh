@@ -1,16 +1,10 @@
 #!/bin/bash
 
-# Define a function to install Poetry
-install_poetry() {
-    echo "Installing Poetry..."
-    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-    source $HOME/.poetry/env
-}
-
 # Check if Poetry is installed
-if ! command -v poetry &> /dev/null && [ "$1" != "--skip-poetry" ]
+if ! command -v poetry &> /dev/null
 then
-    install_poetry
+    echo "Poetry is not installed. Please install it to run this script."
+    exit 1
 fi
 
 # Install dependencies
@@ -45,7 +39,6 @@ shift || true
 case "$cmd" in
 scrap) task_scrap ;;
 unittest) task_test ;;
-poetry) install_poetry ;;
 lint) task_lint ;;
 *) usage ;;
 esac
