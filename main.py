@@ -36,10 +36,6 @@ def main(scrapy_used=False):
         top_books = pd.concat([scraper.extract_genre_data(
             genre,url=TOP_BOOKS_URL,max_books=MAX_BOOKS_TOP_BOOKS, page_class='left'
             ) for genre in genres], ignore_index=True)
-        
-        most_read_books.to_csv('data/most_read_books.csv', index=False)
-        top_books.to_csv('data/top_books.csv', index=False)
-        
         # Create a SQLite database
         with sqlite3.connect('data/books.db') as conn:
             storage = GoodreadsStorage(conn)
