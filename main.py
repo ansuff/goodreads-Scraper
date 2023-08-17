@@ -1,9 +1,12 @@
 import sqlite3
+
 import pandas as pd
+from scrapy.crawler import CrawlerProcess
+
 from brs.data_extraction import GoodreadsScraper
 from brs.data_storage import GoodreadsStorage
-from scrapy.crawler import CrawlerProcess
 from brs.spiders.goodreads_spider import GoodreadsSpider
+
 
 def main(scrapy_used=False):
     """
@@ -26,8 +29,10 @@ def main(scrapy_used=False):
         top_books = pd.concat([scraper.extract_genre_data(
             genre,url=top_books_url,max_books=30, page_class='left'
             ) for genre in genres], ignore_index=True)
+        
         most_read_books.to_csv('data/most_read_books.csv', index=False)
         top_books.to_csv('data/top_books.csv', index=False)
+        
         # Create a SQLite database
         with sqlite3.connect('data/books.db') as conn:
             storage = GoodreadsStorage(conn)

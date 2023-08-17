@@ -2,6 +2,7 @@
 
 This project extracts the top 30 books on the shelves on goodreads and the most read books this week for six different genres: Science Fiction, Travel, Thriller, Poetry, Fantasy, and Business. The extracted data is then stored in a SQLite database. This project is useful for anyone who wants to keep track of the most popular books in these genres and analyze trends in reading habits. It can also be used as a starting point for building a recommendation system or for conducting data analysis on book trends.
 
+TBD: Finalizing scrapy scripts
 
 ## Installation
 
@@ -25,4 +26,10 @@ To install the project and its dependencies, follow these steps:
 
 ```bash 
 ./run.sh test-project
+```
+
+1. (Optional) Run the run.sh script to do linting.
+
+```bash 
+./run.sh lint
 ```
