@@ -1,4 +1,3 @@
-import numpy as np
 class GoodreadsStorage:
     def __init__(self, conn):
         self.conn = conn
@@ -7,7 +6,7 @@ class GoodreadsStorage:
         """
         Create the database schema if it does not exist.
 
-        The schema consists of two tables:
+        The schema consists of four tables:
         - genres: contains the genres of the books
         - authors: contains the authors of the books
         - top_books: contains the top books on the site (shelves)
@@ -64,11 +63,8 @@ class GoodreadsStorage:
         - Insert the top books on the site into the top_books table
         - Insert the most read books this week into the most_read_books table
         """
-        # Check the data types of the columns
-        top_books_dtypes = top_books.dtypes.to_dict()
-        most_read_books_dtypes = most_read_books.dtypes.to_dict()
         # Insert the genres into the genres table
-        genres = top_books['genre'].unique()
+        genres = set(top_books['genre'].unique()) | set(most_read_books['genre'].unique()) # noqa: E501
         authors = set(top_books['author'].unique()) | set(most_read_books['author'].unique())  # noqa: E501
         with self.conn:
             for i, genre in enumerate(genres):
@@ -83,24 +79,21 @@ class GoodreadsStorage:
         # Insert the books into the books table
         with self.conn:
             for _, row in top_books.iterrows():
-                # Check the data types of the row
-                if not all(row[col] == np.nan or isinstance(top_books_dtypes[col].type(row[col]), top_books_dtypes[col].type) for col in top_books.columns):  # noqa: E501
-                    raise ValueError('Invalid data type in row')
                 genre_id = self.conn.execute('SELECT id FROM genres WHERE name = ?', (row['genre'],)).fetchone()[0]  # noqa: E501
                 author_id = self.conn.execute('SELECT id FROM authors WHERE name = ?', (row['author'],)).fetchone()[0]  # noqa: E501
-                self.conn.execute(
-                    'INSERT INTO top_books (genre_id, author_id, title, reviews, ratings, stars, description)' # noqa: E501
-                    'VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-                    (genre_id, author_id, row['title'], row['reviews'], row['ratings'], row['stars'], row['description']) # noqa: E501
-                )
+                # Check if the book already exists in the table
+                if not self.conn.execute('SELECT * FROM top_books WHERE title = ? AND author_id = ? AND genre_id = ?', (row['title'], author_id, genre_id)).fetchone(): # noqa: E501
+                    self.conn.execute(
+                        'INSERT INTO top_books (genre_id, author_id, title, reviews, ratings, stars, description)' # noqa: E501
+                        'VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        (genre_id, author_id, row['title'], row['reviews'], row['ratings'], row['stars'], row['description']) # noqa: E501
+                    )
             for _, row in most_read_books.iterrows():
-                # Check the data types of the row
-                if not all(row[col] == np.nan or isinstance(most_read_books_dtypes[col].type(row[col]), most_read_books_dtypes[col].type) for col in most_read_books.columns):  # noqa: E501
-                    raise ValueError('Invalid data type in row')
                 genre_id = self.conn.execute('SELECT id FROM genres WHERE name = ?', (row['genre'],)).fetchone()[0]  # noqa: E501
                 author_id = self.conn.execute('SELECT id FROM authors WHERE name = ?', (row['author'],)).fetchone()[0]  # noqa: E501
-                self.conn.execute(
-                    'INSERT INTO most_read_books (genre_id, author_id, title, reviews, ratings, stars, description)' # noqa: E501
-                    'VALUES (?, ?, ?, ?, ?, ?, ?)',
-                    (genre_id, author_id, row['title'], row['reviews'], row['ratings'], row['stars'], row['description']) # noqa: E501
-                )
+                if not self.conn.execute('SELECT * FROM top_books WHERE title = ? AND author_id = ? AND genre_id = ?', (row['title'], author_id, genre_id)).fetchone(): # noqa: E501
+                    self.conn.execute(
+                        'INSERT INTO most_read_books (genre_id, author_id, title, reviews, ratings, stars, description)' # noqa: E501
+                        'VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        (genre_id, author_id, row['title'], row['reviews'], row['ratings'], row['stars'], row['description']) # noqa: E501
+                    )

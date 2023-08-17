@@ -27,13 +27,13 @@ task_lint() {
 }
 
 # Define a function to run the main script
-task_scrap_store() {
+task_scrap() {
     poetry run python main.py
 }
 
 usage() {
   echo "USAGE"
-  echo "scrap-store | test-project | poetry | lint"
+  echo "scrap | unittest | poetry | lint"
   echo ""
   exit 1
 }
@@ -41,8 +41,8 @@ usage() {
 cmd=$1
 shift || true
 case "$cmd" in
-scrap-store) task_scrap_store ;;
-test-project) task_test ;;
+scrap) task_scrap ;;
+unittest) task_test ;;
 poetry) install_poetry ;;
 lint) task_lint ;;
 *) usage ;;

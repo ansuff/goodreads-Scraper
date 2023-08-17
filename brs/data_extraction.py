@@ -1,7 +1,6 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-import time
 
 class GoodreadsScraper:
     def __init__(self):
@@ -20,27 +19,21 @@ class GoodreadsScraper:
         """
         response = requests.get(url)
         soup = BeautifulSoup(response.content, 'html.parser')
-        title = soup.find('h1', {'data-testid': 'bookTitle'})
-        if title is not None:
-            title = title.text.strip()
+        title = soup.find('h1')
         author = soup.find('span', class_='ContributorLink__name')
-        if author is not None:
-            author = author.text.strip()
         reviews = soup.find('span', attrs={'data-testid': 'reviewsCount'})
-        if reviews is not None:
-            reviews = int(reviews.text.split()[0].replace(',', ''))
         ratings = soup.find('span', attrs={'data-testid': 'ratingsCount'})
-        if ratings is not None:
-            ratings = int(ratings.text.split()[0].replace(',', ''))
         stars = soup.find('div', class_='RatingStatistics__rating')
-        if stars is not None:
-            stars = float(stars.text.split()[0])
         description = soup.find('span', class_='Formatted')
-        if description is not None:
-            description = description.text.strip()
         # Check if any of the extracted data is None
         if (title is not None and author is not None and reviews is not None and
             ratings is not None and stars is not None and description is not None):
+            title = title.text.strip()
+            author = author.text.strip()
+            reviews = int(reviews.text.split()[0].replace(',', ''))
+            ratings = int(ratings.text.split()[0].replace(',', ''))
+            stars = float(stars.text.split()[0])
+            description = description.text.strip()
             # Return the extracted data as a dictionary
             return {
                 'title': title,
@@ -51,7 +44,9 @@ class GoodreadsScraper:
                 'description': description
             }
         else:
-            return None
+            print(f'Failed to extract book data for {url}')
+
+            
 
     def extract_genre_data(self, genre, url, max_books=30, page_class='left'):
         """
@@ -79,13 +74,11 @@ class GoodreadsScraper:
             print(f'Proceed to extract most read books data for genre: {genre}')
         else:
             print(f'Proceed to extract top {max_books} books data for genre: {genre}')
-        i = 0
-        while len(book_data) < len(book_urls) and i < len(book_urls):
-            book_data_item = self.extract_book_data(book_urls[i])
-            if book_data_item is not None:
-                book_data.append({'genre': genre, **book_data_item})
-            i += 1
-            time.sleep(5)
+        for book_url in book_urls:
+            book_data_item = None 
+            while book_data_item is None:
+                book_data_item = self.extract_book_data(book_url)
+            book_data.append({'genre': genre, **book_data_item})
         # Return the extracted book data as a DataFrame
         if max_books == -1:
             print(f'Extracted most read books this week for genre {genre}')

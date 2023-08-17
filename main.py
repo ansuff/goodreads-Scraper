@@ -7,6 +7,14 @@ from brs.data_extraction import GoodreadsScraper
 from brs.data_storage import GoodreadsStorage
 from brs.spiders.goodreads_spider import GoodreadsSpider
 
+# how many books do you want to extract
+MAX_BOOKS_MOST_READ = -1 # the max! -1 means all
+MAX_BOOKS_TOP_BOOKS = 30
+
+# Define the URLs to extract the data from
+# for now it is the books on shelves
+TOP_BOOKS_URL = 'https://www.goodreads.com/shelf/show'
+
 
 def main(scrapy_used=False):
     """
@@ -22,12 +30,11 @@ def main(scrapy_used=False):
         # Extract the book data for each genre
         scraper = GoodreadsScraper()
         most_read_url = 'https://www.goodreads.com/genres/most_read'
-        top_books_url = 'https://www.goodreads.com/shelf/show'
         most_read_books = pd.concat([scraper.extract_genre_data(
-            genre,url=most_read_url,max_books=-1, page_class='coverWrapper'
+            genre,url=most_read_url,max_books=MAX_BOOKS_MOST_READ, page_class='coverWrapper' # noqa: E501
             ) for genre in genres], ignore_index=True)
         top_books = pd.concat([scraper.extract_genre_data(
-            genre,url=top_books_url,max_books=30, page_class='left'
+            genre,url=TOP_BOOKS_URL,max_books=MAX_BOOKS_TOP_BOOKS, page_class='left'
             ) for genre in genres], ignore_index=True)
         
         most_read_books.to_csv('data/most_read_books.csv', index=False)
