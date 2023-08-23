@@ -93,4 +93,6 @@ class GoodreadsScraper:
             print(f'\nExtracted most read books this week for genre {genre}')
         else:
             print(f'\nExtracted top {max_books} books genre {genre}')
+                
+        self.driver.quit()
         return pd.DataFrame(book_data)
