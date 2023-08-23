@@ -14,8 +14,8 @@ python = "^3.11"
 beautifulsoup4 = "^4.9.3"
 pandas = "^1.2.4"
 requests = "^2.25.1"
-scrapy = "^2.10.0"
 ruff = "^0.0.284"
+selenium = "^4.11.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"

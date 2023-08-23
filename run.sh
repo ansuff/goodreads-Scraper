@@ -21,15 +21,13 @@ task_lint() {
 }
 
 # Define a function to run the main script
-task_scrap() {
+task_scrape() {
     poetry run python main.py
 }
 
 usage() {
   echo "USAGE"
-  echo "scrap | unittest | poetry | lint"
-  echo ""
-  echo "add --skip-poetry to skip poetry installation"
+  echo "scrape | unittest | lint"
   echo ""
   exit 1
 }
@@ -37,7 +35,7 @@ usage() {
 cmd=$1
 shift || true
 case "$cmd" in
-scrap) task_scrap ;;
+scrape) task_scrape ;;
 unittest) task_test ;;
 lint) task_lint ;;
 *) usage ;;

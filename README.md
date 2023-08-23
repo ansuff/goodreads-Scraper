@@ -11,21 +11,16 @@ To install the project and its dependencies, follow these steps:
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
 3. Run the `run.sh` script to install Poetry and the project dependencies.
-
-```bash
-./run.sh poetry
-```
-
 4. Run the run.sh script to scrape the top 30 books from goodreads and store them in a SQLite database.
    
 ```bash
-./run.sh scrap-store
+./run.sh scrape
 ```
 
 5. (Optional) Run the run.sh script to run the project tests.
 
 ```bash 
-./run.sh test-project
+./run.sh unittest
 ```
 
 1. (Optional) Run the run.sh script to do linting.
